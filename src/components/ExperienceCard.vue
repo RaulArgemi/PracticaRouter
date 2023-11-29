@@ -6,10 +6,9 @@
     </span>
   </div>
 </template>
-<script>
-export default {
-  props:{
-    experience:{type: Object, required: true,}
-  }
-}
+
+<script setup lang="ts">
+import { defineProps } from 'vue';
+
+const props = defineProps(['experience']);
 </script>

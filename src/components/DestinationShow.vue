@@ -14,32 +14,25 @@
         <router-link
           v-for="experience in destination.experiences"
           :key="experience.slug"
-          :to="{name: 'experience.show', params:{experienceSlug: experience.slug}}"
+          :to="{ name: 'experience.show', params: { experienceSlug: experience.slug } }"
         >
-          <ExperienceCard
-            :experience="experience"
-          />
+          <ExperienceCard :experience="experience" />
         </router-link>
       </div>
       <router-view />
     </section>
   </div>
-  </template>
-  <script>
-  import sourceData from "@/data.json";
-  import ExperienceCard from "@/components/ExperienceCard.vue";
-  import GoBack from '@/components/GoBack.vue'
-  export default {
-    components: { ExperienceCard, GoBack },
-    props: {
-      id: { type: Number, required: true },
-    },
-    computed: {
-      destination() {
-        return sourceData.destinations.find(
-          (destination) => destination.id === this.id
-        );
-      },
-    },
-  };
-  </script>
+</template>
+
+<script setup lang="ts">
+import { ref, defineProps, computed } from 'vue';
+import sourceData from '@/data.json';
+import ExperienceCard from '@/components/ExperienceCard.vue';
+import GoBack from '@/components/GoBack.vue';
+
+const props = defineProps(['id']);
+
+const destination = computed(() =>
+  sourceData.destinations.find((dest) => dest.id === props.id)
+);
+</script>

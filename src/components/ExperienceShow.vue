@@ -1,37 +1,28 @@
 <template>
   <section>
-    <h1>{{experience.name}}</h1>
-    <img :src="`/images/${experience.image}`" :alt="experience.name" class="large-image">
-    <p>{{experience.description}}</p>
+    <h1>{{ experience.name }}</h1>
+    <img :src="`/images/${experience.image}`" :alt="experience.name" class="large-image" />
+    <p>{{ experience.description }}</p>
   </section>
 </template>
-<script>
+
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
 import sourceData from '@/data.json';
 
-export default {
-  props:{
-    id: {type: Number, required: true,},
-    experienceSlug: {type: String, required: true,}
-  },
-  computed:{
-    destination(){
-      return sourceData.destinations.find(
-        destination => destination.id === this.id
-      )
-    },
-    experience(){
-      return this.destination.experiences.find(
-        experience=> experience.slug === this.experienceSlug
-      )
-    }
-  }
-}
-</script>
+const props = defineProps(['id', 'experienceSlug']);
 
-<style scoped>
-.large-image {
-  width: 500px;
-  max-width: 800px;
-  height: auto;
-}
-</style>
+const destination = ref(null);
+
+const experience = computed(() => {
+  return destination.value?.experiences.find(
+    (experience) => experience.slug === props.experienceSlug
+  ) || {};
+});
+
+onMounted(() => {
+  destination.value = sourceData.destinations.find(
+    (destination) => destination.id === props.id
+  );
+});
+</script>

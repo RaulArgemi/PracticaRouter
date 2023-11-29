@@ -9,21 +9,9 @@
   </div>
 </template>
 
-<script>
-import TheNavigation from "./components/TheNavigation.vue";
+<script setup lang="ts">
+import { ref } from 'vue';
+import TheNavigation from './components/TheNavigation.vue';
 
-export default {
-  components: {
-    TheNavigation,
-  },
-  data() {
-    return {
-      destinations: [],
-    };
-  },
-};
+const destinations = ref([]);
 </script>
-
-<style>
-/* Estilos aquí */
-</style>
